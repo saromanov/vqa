@@ -11,8 +11,13 @@ class Recurrent:
 		self.hid_dim
 		self.word_dim = word_dim
 
-	def train(self):
+	def train(self, modelname='GRU'):
 		model = Sequential()
-		model.add(GRU(output_dim=self.hid_dim, return_sequence=False, input_shape=(maxvalue, self.word_dim)))
+		if modelname == 'GRU':
+			model.add(GRU(output_dim=self.hid_dim, return_sequence=True, input_shape=(maxvalue, self.word_dim)))
+		if modelname == 'LSTM':
+			model.add(LSTM(output_dim=self.hid_dim, return_sequence=True, input_shape=(maxvalue, self.word_dim)))
+		else:
+			raise Exception("Model name is not found")
 		model.add(Activation('sigmoid'))
 		model.compile(loss='categorical_crossentropy', optimizer='adadelta')
