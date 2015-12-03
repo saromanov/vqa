@@ -34,7 +34,7 @@ class Convolutional:
 		self.dim = dim
 		self.num_classes = num_classes
 
-	def train(self, X, y, Xtest, ytest):
+	def _construct_network(self):
 		model = Sequential()
 		model.add(Convolution2D(32,3,3)
 		model.add(Activation('relu'))
@@ -51,6 +51,8 @@ class Convolutional:
 		model.add(Dense(self.num_classes))
 		model.add(Activation('softmax'))
 
+	def train(self, X, y, Xtest, ytest):
+		model = self._construct_network()
 		model.compile(loss='categorical_crossentropy', optimizer='adam')
 		X = X.astype("float32")
 		Xtest = X.astype("float32")
